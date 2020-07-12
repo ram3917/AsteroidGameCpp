@@ -1,33 +1,30 @@
-// /*
-//     Renders the changes onto display window
+/*
+    Renders the game
 
-//     Part of code are taken from https://github.com/udacity/CppND-Capstone-Snake-Game
-// */
+    Part of code are taken from https://github.com/udacity/CppND-Capstone-Snake-Game
+*/
 
-// #ifndef RENDERER_H
-// #define RENDERER_H
+#ifndef RENDERER_H
+#define RENDERER_H
 
-// #include <vector>
-// #include "SDL.h"
-// //#include "snake.h"
+#include <vector>
+#include "SDL.h"
+#include "mfalcon.h"
 
-// class Renderer {
-//  public:
-//   Renderer(const std::size_t screen_width, const std::size_t screen_height,
-//            const std::size_t grid_width, const std::size_t grid_height);
-//   ~Renderer();
+class Renderer {
+  public:
+  Renderer(const std::size_t screen_width, const std::size_t screen_height);
+  ~Renderer();
 
-//   void Render(Snake const snake, SDL_Point const &food);
-//   void UpdateWindowTitle(int score, int fps);
+  void Render(MFalcon& falcon);
+  void UpdateWindowTitle(int score, int fps);
 
-//  private:
-//   SDL_Window *sdl_window;
-//   SDL_Renderer *sdl_renderer;
+ private:
+  SDL_Window *sdl_window;
+  SDL_Renderer *sdl_renderer;
 
-//   const std::size_t screen_width;
-//   const std::size_t screen_height;
-//   const std::size_t grid_width;
-//   const std::size_t grid_height;
-// };
+  const std::size_t screen_width;
+  const std::size_t screen_height;
+};
 
-// #endif
+#endif

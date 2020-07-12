@@ -10,12 +10,15 @@ project(SDL2Test)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS} src include)
+include_directories(include)
+include_directories(${SDL2_INCLUDE_DIRS} src)
 
 add_subdirectory(thirdparty/googletest)
 
-add_executable(AsteroidShooter src/main.cpp)
+#set(SOURCES src/*.cpp)
+file(GLOB SOURCES "src/*.cpp")
+add_executable(AsteroidShooter ${SOURCES})
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(AsteroidShooter ${SDL2_LIBRARIES} gtest_main)
 
-add_test(NAME test COMMAND test)rama
+add_test(NAME test COMMAND test)

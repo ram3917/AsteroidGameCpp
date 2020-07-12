@@ -239,7 +239,7 @@ Google Mock can be used in diverse environments.  The default
 configuration may not work (or may not work well) out of the box in
 some environments.  However, you can easily tweak Google Mock by
 defining control macros on the compiler command line.  Generally,
-these macros are named like `GTEST_XYZ` and you define them to either 1
+these macros are named like `GTESTxYZ` and you define them to either 1
 or 0 to enable or disable a certain feature.
 
 We list the most frequently used macros below.  For a complete list,

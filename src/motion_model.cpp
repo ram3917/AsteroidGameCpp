@@ -1,47 +1,35 @@
-#include"motion_model.h"
+#include "motion_model.h"
 
-void MotionModel::MoveDown()
+MotionModel::MotionModel(int screenX, int screenY)
 {
-    Move(Direction::mDown);
+    _area.x = screenX;
+    _area.y = screenY;
 }
 
-void MotionModel::MoveUp()
+void MotionModel::MoveDown(Position* pos, int& speed)
 {
-    Move(Direction::mUp);
+    pos->x = (pos->x + speed);
 }
 
-void MotionModel::MoveLeft()
+void MotionModel::MoveUp(Position* pos, int& speed)
 {
-    Move(Direction::mLeft);
+    pos->x = (pos->x - speed);
 }
 
-void MotionModel::MoveRight()
+void MotionModel::MoveLeft(Position* pos, int& speed)
 {
-    Move(Direction::mRight);
+    pos->y = (pos->y - speed);
 }
 
-void MotionModel::Move(const Direction& dir)
+void MotionModel::MoveRight(Position* pos, int& speed)
 {
-    switch (dir)
-    {
-        case Direction::mUp:
-            _pos.x = (_pos.x - _speed);
-            break;
-        case Direction::mDown:
-            _pos.x = (_pos.x + _speed);
-            break;
-        case Direction::mLeft:
-            _pos.y = (_pos.y - _speed);
-            break;
-        case Direction::mRight:
-            _pos.y = (_pos.y + _speed);
-            break;
-    }
+    pos->y = (pos->y + speed);
+}
 
-    // Set Item position to limits
-    _pos.x = (_pos.x <= 0) ? 0 : _pos.x;
-    _pos.x = (_pos.x >= _area.x - _size.x) ? _area.x - _size.x : _pos.x;
-
-    _pos.y = (_pos.y <= 0) ? 0 : _pos.y;
-    _pos.y = (_pos.y >= _area.y - _size.y) ? _area.y - _size.y : _pos.y;    
+bool MotionModel::IsItemOnScreen(const Position& pos,
+                             const Size& size)
+{
+  // Check if item is on edge
+  return ((0 <= pos.x) && ((_area.x - size.x) >= pos.x) &&
+      (0 <= pos.y) && ((_area.y - size.y) >= pos.y));    
 }

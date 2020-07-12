@@ -8,13 +8,11 @@ int main() {
   constexpr std::size_t kMsPerFrame{1000 / kFramesPerSecond};
   constexpr std::size_t kScreenWidth{640};
   constexpr std::size_t kScreenHeight{640};
-  // constexpr std::size_t kGridWidth{128};
-  // constexpr std::size_t kGridHeight{128};
 
 std::cout << "I RUN \n";
 
 Renderer renderer(kScreenWidth, kScreenHeight); //, kGridWidth, kGridHeight);
-Controller controller;
+Controller controller(kScreenWidth, kScreenHeight);
 Game game(kScreenWidth, kScreenHeight);
 game.Run(controller, renderer, kMsPerFrame);
 std::cout << "Game has terminated successfully!\n";

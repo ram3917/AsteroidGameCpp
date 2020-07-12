@@ -1,29 +1,36 @@
 #ifndef M_FALCON_H_
 #define M_FALCON_H_
 
+#include "object.h"
 #include "motion_model.h"
+#include <vector>
+#include <memory>
 
-class MFalcon : public MotionModel
+class Bullet : public Object
+{
+public:
+    Bullet(Position pos);
+};
+
+class MFalcon : public Object
 {
 public:
     
-    MFalcon(int width, int height);
+    MFalcon(int x, int y);
 
-    // TODO : Rule of 5 ?
+    void Shoot();
 
-    // getter
-    bool IsAlive() {return _alive; }
+    void UpdateBullets();    
 
-    // void Update();
+    std::vector<Bullet> GetBullets()
+    {
+        return _bullets;
+    }
 
 private:
-
-    // default alive
-    bool _alive { true };
-
-    // Motion 
-    // MotionModel _mm;
-
+    
+    // A list of all bullets
+    std::vector<Bullet> _bullets;
 };
 
 #endif

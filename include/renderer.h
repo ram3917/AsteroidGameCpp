@@ -10,13 +10,14 @@
 #include <vector>
 #include "SDL.h"
 #include "mfalcon.h"
+#include "asteroid.h"
 
 class Renderer {
   public:
   Renderer(const std::size_t screen_width, const std::size_t screen_height);
   ~Renderer();
 
-  void Render(MFalcon& falcon);
+  void Render(MFalcon& falcon, std::vector<Asteroid>& asteroids);
   void UpdateWindowTitle(int score, int fps);
 
  private:

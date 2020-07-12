@@ -42,7 +42,9 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(MFalcon& falcon) {
+void Renderer::Render(MFalcon& falcon,
+     std::vector<Asteroid>& asteroids)
+{
   SDL_Rect block;
 
   // Clear screen
@@ -50,7 +52,7 @@ void Renderer::Render(MFalcon& falcon) {
   SDL_RenderClear(sdl_renderer);
 
   // Render falcon ship 
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xFF, 0x00, 0xFF);
 
   // X and Y transpose
   auto pos  = falcon.GetPosition();
@@ -66,6 +68,43 @@ void Renderer::Render(MFalcon& falcon) {
 
   // TODO : Update laser bullets
   
+  // Render Asteroids  
+  for (auto& a : asteroids)
+  {
+      // Render falcon ship 
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+
+    // X and Y transpose
+    auto pos  = a.GetPosition();
+    auto size = a.GetSize();
+
+    // Set pos and size
+    block.x = pos.y;
+    block.y = pos.x;
+    block.w = size.x;
+    block.h = size.y;
+
+    SDL_RenderFillRect(sdl_renderer, &block);
+  }
+
+  auto bullets = falcon.GetBullets();
+  for (auto b : bullets)
+  {
+      // Render falcon ship 
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0x00, 0xFF);
+
+    // X and Y transpose    
+    auto pos = b.GetPosition();
+    auto size = b.GetSize();
+
+    // Set pos and size
+    block.x = pos.y;
+    block.y = pos.x;
+    block.w = size.x;
+    block.h = size.y;
+
+    SDL_RenderFillRect(sdl_renderer, &block);
+  }
   
   // Update Screen
   SDL_RenderPresent(sdl_renderer);

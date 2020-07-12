@@ -1,11 +1,20 @@
 #include "game.h"
 #include <iostream>
+#include <algorithm>
 #include "SDL.h"
 
-Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : _falcon(grid_height, grid_width),
-      engine(dev())
-{
+Game::Game(std::size_t screen_width, std::size_t screen_height)
+    : engine(dev()),
+      screenX(screen_width), screenY(screen_height),
+      random_x(0, static_cast<int>(screen_height)),
+      random_y(0, static_cast<int>(screen_width)),
+      random_asteriods(0, 3)
+{ 
+  _mm = new MotionModel(screen_width, screen_height);
+
+  // Instatiate Falcon
+  _falcon = new MFalcon(static_cast<int>(screen_width - (screen_width / 10)),
+            static_cast<int>(screen_height / 2));
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -21,9 +30,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, _falcon);
+    controller.HandleInput(running, *_falcon);
     Update();
-    renderer.Render(_falcon);
+    renderer.Render(*_falcon, _asteroids);
 
     frame_end = SDL_GetTicks();
 
@@ -49,11 +58,42 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::Update() {
-  if (!_falcon.IsAlive()) return;
+  if (!_falcon->IsAlive()) return;
 
   // Update bullet positions
+  _falcon->UpdateBullets();
 
-  // TODO : Update asteroid positions and bullets
+  // Update asteroid positions
+  for (auto& a : _asteroids)
+  {
+    Position pos = a.GetPosition();
+    int speed = a.GetSpeed();
+    _mm->MoveDown(&pos, speed);
+    // Update position
+    a.SetPosition(pos);
+  }
+
+  // Get all asteroids out of arena
+  auto end = std::remove_if(_asteroids.begin(), _asteroids.end(),
+              [this](Asteroid& a)                        
+  { return !_mm->IsItemOnScreen(a.GetPosition(), a.GetSize()); });  
+  _asteroids.erase(end, _asteroids.end());
+
+  // Add new asteroids
+  if (_asteroids.size() < 5)
+  {
+    for (int iter = 0; iter <= random_asteriods(engine); ++iter)
+    {
+      // Instantiate an asteroid in space
+      Asteroid asteroid(random_y(engine), random_x(engine));
+
+      // Add to list
+      _asteroids.emplace_back(asteroid);
+    }
+  }
+  
+  // Check if asteroid collides with ship
+  // !!!GAME OVER!!!
 
 }
 

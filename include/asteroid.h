@@ -17,6 +17,13 @@ public:
         SetSize(10,20);
         SetSpeed(2);
     }
+
+    void KillAsteroid() { _isAlive = false; }
+    bool IsAlive() { return _isAlive; }
+
+private:
+    bool _isAlive { true };
+
 };
 
 #endif

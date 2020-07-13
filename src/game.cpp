@@ -7,7 +7,7 @@ Game::Game(std::size_t screen_width, std::size_t screen_height)
     : engine(dev()),
       screenX(screen_width), screenY(screen_height),
       random_x(0, static_cast<int>(screen_height)),
-      random_y(0, static_cast<int>(screen_width)),
+      random_y(0, static_cast<int>(screen_width/2)),
       random_asteriods(0, 3)
 { 
   _mm = new MotionModel(screen_width, screen_height);
@@ -31,7 +31,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, *_falcon);
-    Update();
+    running = Update();
     renderer.Render(*_falcon, _asteroids);
 
     frame_end = SDL_GetTicks();
@@ -57,27 +57,53 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   }
 }
 
-void Game::Update() {
-  if (!_falcon->IsAlive()) return;
+bool Game::Update() {
 
   // Update bullet positions
-  _falcon->UpdateBullets();
+  _falcon->UpdateBullets(_asteroids);
+
+  // get size before killing asteroids
+  int sizeBefore = _asteroids.size();
+
+  // Delete all destroyed asteroids
+  _asteroids.erase(std::remove_if(_asteroids.begin(), _asteroids.end(),
+              [](std::shared_ptr<Asteroid> a)                        
+  { return !a->IsAlive(); }), _asteroids.end() );  
+
+  // Update Score
+  // Change in size is the number of asteroids killed.
+  score += (sizeBefore - _asteroids.size());
 
   // Update asteroid positions
+  bool isHit = true;
   for (auto& a : _asteroids)
   {
-    Position pos = a.GetPosition();
-    int speed = a.GetSpeed();
+    Position pos = a->GetPosition();
+    int speed = a->GetSpeed();
     _mm->MoveDown(&pos, speed);
     // Update position
-    a.SetPosition(pos);
+    a->SetPosition(pos);
+
+    // Check if falcon is not hit
+    if (_mm->CheckCollision(pos, a->GetSize(),
+     _falcon->GetPosition(), _falcon->GetSize()))
+     {
+        isHit = false;
+        break;    
+     }
+  }
+
+  // GAME OVER
+  if (!isHit)
+  {
+    return false; 
   }
 
   // Get all asteroids out of arena
-  auto end = std::remove_if(_asteroids.begin(), _asteroids.end(),
-              [this](Asteroid& a)                        
-  { return !_mm->IsItemOnScreen(a.GetPosition(), a.GetSize()); });  
-  _asteroids.erase(end, _asteroids.end());
+  _asteroids.erase(std::remove_if(_asteroids.begin(), _asteroids.end(),
+              [this](std::shared_ptr<Asteroid> a)                        
+  { return !_mm->IsItemOnScreen(a->GetPosition(), a->GetSize()); }),
+  _asteroids.end() );
 
   // Add new asteroids
   if (_asteroids.size() < 5)
@@ -88,13 +114,12 @@ void Game::Update() {
       Asteroid asteroid(random_y(engine), random_x(engine));
 
       // Add to list
-      _asteroids.emplace_back(asteroid);
+      _asteroids.emplace_back(std::make_shared<Asteroid>(asteroid));
     }
   }
-  
-  // Check if asteroid collides with ship
-  // !!!GAME OVER!!!
 
+  // Keep running
+  return true;
 }
 
 int Game::GetScore() const { return score; }

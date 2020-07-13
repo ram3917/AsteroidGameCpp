@@ -26,20 +26,49 @@ void MFalcon::Shoot()
     _bullets.emplace_back(bullet);
 }
 
-void MFalcon::UpdateBullets()
+void MFalcon::UpdateBullets(std::vector<std::shared_ptr<Asteroid>>& asteroids)
 {
 
   MotionModel mm(1, 1);
 
   // Update position
-  for (auto& b : _bullets)
+  for (auto iter = _bullets.begin(); iter != _bullets.end(); )
   {
-    Position pos = b.GetPosition();
-    int speed = b.GetSpeed();
-    mm.MoveUp(&pos, speed);
-    // Update position
-    b.SetPosition(pos);
-  }
 
-  // TODO : Check if there are collisions
-}
+    Position pos = iter->GetPosition();
+    int speed = iter->GetSpeed();
+    Size size = iter->GetSize();
+    mm.MoveUp(&pos, speed);
+   
+    // bool to get status
+    bool hasHit = false;
+
+   // Check if bullet has hit target
+    for (auto& a : asteroids)
+    {
+      auto aSize = a->GetSize();
+      auto aPos  = a->GetPosition();
+
+      // If collision
+      if (mm.CheckCollision(pos, size, aPos, aSize))
+      {
+        // kill asteroid
+        a->KillAsteroid();
+        hasHit = true;        
+        break;
+      }     
+    }
+
+    if (hasHit)
+    {
+      // Kill bullet
+        _bullets.erase(iter);
+    }       
+    else
+    {
+      // Update position
+        iter->SetPosition(pos);
+        ++iter;
+    }    
+  }
+} 

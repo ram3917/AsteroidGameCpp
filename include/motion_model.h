@@ -25,6 +25,10 @@ public:
     bool IsItemOnScreen(const Position& pos,
                       const Size& size);
 
+    // Check collision
+    bool CheckCollision(Position& l1, Size& s1,
+                     Position& l2, Size& s2);
+ 
 private:
     // Area
     Size _area;

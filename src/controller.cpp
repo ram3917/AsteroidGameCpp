@@ -38,9 +38,7 @@ void Controller::HandleInput(bool &running, MFalcon &falcon) const
       // Check if new position is OK
       if (_mm->IsItemOnScreen(pos, falcon.GetSize()))
       {
-
-        std::cout << pos.x << " " << pos.y << std::endl;
-        // Update position
+         // Update position
         falcon.SetPosition(pos);
       }
     }

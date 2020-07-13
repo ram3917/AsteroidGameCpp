@@ -8,13 +8,11 @@
 // Move directions
 enum class Direction{mLeft, mRight, mUp, mDown};
 
-// State : alive, dead
-enum class State{sAlive, sDead};
 // World size
 typedef struct Size
 {
-    int x { 0 };
-    int y { 0 };
+    int w { 0 };
+    int h { 0 };
 }Size;
 
 typedef struct Position
@@ -34,9 +32,9 @@ public:
         SetPosition(p);
     }
     
-    void SetSize(int x, int y)
+    void SetSize(int w, int h)
     {
-        Size s = { x, y };
+        Size s = { w, h };
         SetSize(s);
     }
 
@@ -48,23 +46,18 @@ public:
 
     void SetSize(Size size)
     {
-        _size.x = size.x;
-        _size.y = size.y;
+        _size.w = size.w;
+        _size.h = size.h;
     }
 
     Position& GetPosition() { return _pos; }
     Size& GetSize() { return _size; }
-
-    void KillObject() { _active = false; }
-    bool IsAlive() const {return _active; }
-
+    
     void SetSpeed(int speed) { _speed = speed; }
     int GetSpeed() { return _speed; }
 
 private:
-
    // Default alive
-   bool _active { true };
    Position _pos;
    Size _size;
    int _speed { 0 };

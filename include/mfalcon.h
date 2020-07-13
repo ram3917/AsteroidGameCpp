@@ -6,6 +6,7 @@
 #include "asteroid.h"
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 class Bullet : public Object
 {
@@ -21,7 +22,7 @@ public:
 
     void Shoot();
 
-    void UpdateBullets(std::vector<Asteroid>& asteroids);    
+    void UpdateBullets(std::vector<std::shared_ptr<Asteroid>>& asteroids);    
 
     std::vector<Bullet> GetBullets()
     {
@@ -29,7 +30,7 @@ public:
     }
 
 private:
-    
+   
     // A list of all bullets
     std::vector<Bullet> _bullets;
 };

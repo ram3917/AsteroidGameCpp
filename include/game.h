@@ -9,6 +9,7 @@
 #include "mfalcon.h"
 #include "asteroid.h"
 #include "motion_model.h"
+#include <memory>
 
 class Game
 {
@@ -28,7 +29,7 @@ class Game
   MFalcon* _falcon;
   // laser shot position (s)
   // Asteroids
-  std::vector<Asteroid> _asteroids;
+  std::vector<std::shared_ptr<Asteroid>> _asteroids;
     
   std::random_device dev;
   std::mt19937 engine;
@@ -41,7 +42,7 @@ class Game
   int screenX { 0 };
   int screenY { 0 };
 
-  void Update();
+  bool Update();
 };
 
 #endif

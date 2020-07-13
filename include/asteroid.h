@@ -14,7 +14,7 @@ public:
     Asteroid(int x, int y)
     {
         SetPosition(x, y);
-        SetSize(20,20);
+        SetSize(10,20);
         SetSpeed(2);
     }
 };

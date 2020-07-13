@@ -10,7 +10,7 @@ Bullet::Bullet(Position pos)
 MFalcon::MFalcon(int x, int y)
 {    
     SetPosition(x, y);
-    SetSize(15, 15);
+    SetSize(15, 10);
     SetSpeed(10);
 }
 
@@ -40,4 +40,6 @@ void MFalcon::UpdateBullets()
     // Update position
     b.SetPosition(pos);
   }
+
+  // TODO : Check if there are collisions
 }

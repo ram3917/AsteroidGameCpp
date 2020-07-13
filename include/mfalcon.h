@@ -3,6 +3,7 @@
 
 #include "object.h"
 #include "motion_model.h"
+#include "asteroid.h"
 #include <vector>
 #include <memory>
 
@@ -20,7 +21,7 @@ public:
 
     void Shoot();
 
-    void UpdateBullets();    
+    void UpdateBullets(std::vector<Asteroid>& asteroids);    
 
     std::vector<Bullet> GetBullets()
     {

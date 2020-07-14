@@ -13,12 +13,9 @@ find_package(SDL2 REQUIRED)
 include_directories(include)
 include_directories(${SDL2_INCLUDE_DIRS} src)
 
-add_subdirectory(thirdparty/googletest)
-
 #set(SOURCES src/*.cpp)
 file(GLOB SOURCES "src/*.cpp")
 add_executable(AsteroidShooter ${SOURCES})
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
-target_link_libraries(AsteroidShooter ${SDL2_LIBRARIES} gtest_main)
+target_link_libraries(AsteroidShooter ${SDL2_LIBRARIES})
 
-add_test(NAME test COMMAND test)

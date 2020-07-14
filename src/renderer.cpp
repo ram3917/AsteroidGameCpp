@@ -65,8 +65,6 @@ void Renderer::Render(MFalcon& falcon,
 
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  SDL_Texture * texture = SDL_CreateTextureFromSurface(sdl_renderer, image_asteroid);
-    
   // Render Asteroids  
   for (auto& a : asteroids)
   {

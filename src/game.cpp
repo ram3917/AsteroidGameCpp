@@ -31,6 +31,11 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 
     // Input, Update, Render - the main game loop.
     controller.HandleInput(running, *_falcon);
+
+    // Stop if quit in controller
+    if (!running)
+      break;
+
     running = Update();
     renderer.Render(*_falcon, _asteroids);
 

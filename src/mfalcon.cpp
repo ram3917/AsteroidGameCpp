@@ -23,7 +23,7 @@ void MFalcon::Shoot()
     Bullet bullet(pos);
     
     // Add list to bullet
-    _bullets.emplace_back(bullet);
+    _bullets.emplace_back(std::make_shared<Bullet>(bullet));
 }
 
 void MFalcon::UpdateBullets(std::vector<std::shared_ptr<Asteroid>>& asteroids)
@@ -34,10 +34,9 @@ void MFalcon::UpdateBullets(std::vector<std::shared_ptr<Asteroid>>& asteroids)
   // Update position
   for (auto iter = _bullets.begin(); iter != _bullets.end(); )
   {
-
-    Position pos = iter->GetPosition();
-    int speed = iter->GetSpeed();
-    Size size = iter->GetSize();
+    Position pos = (*iter)->GetPosition();
+    int speed = (*iter)->GetSpeed();
+    Size size = (*iter)->GetSize();
     mm.MoveUp(&pos, speed);
    
     // bool to get status
@@ -67,7 +66,7 @@ void MFalcon::UpdateBullets(std::vector<std::shared_ptr<Asteroid>>& asteroids)
     else
     {
       // Update position
-        iter->SetPosition(pos);
+        (*iter)->SetPosition(pos);
         ++iter;
     }    
   }

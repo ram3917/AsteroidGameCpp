@@ -93,15 +93,9 @@ bool Game::Update() {
     if (_mm->CheckCollision(pos, a->GetSize(),
      _falcon->GetPosition(), _falcon->GetSize()))
      {
-        isHit = false;
-        break;    
+        // GAME OVER
+        return false;
      }
-  }
-
-  // GAME OVER
-  if (!isHit)
-  {
-    return false; 
   }
 
   // Get all asteroids out of arena

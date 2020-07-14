@@ -35,6 +35,8 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
 
+  image_asteroid = SDL_LoadBMP("meteors.bmp");
+
 }
 
 Renderer::~Renderer() {
@@ -66,8 +68,8 @@ void Renderer::Render(MFalcon& falcon,
 
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  // TODO : Update laser bullets
-  
+  SDL_Texture * texture = SDL_CreateTextureFromSurface(sdl_renderer, image_asteroid);
+    
   // Render Asteroids  
   for (auto& a : asteroids)
   {
@@ -85,6 +87,10 @@ void Renderer::Render(MFalcon& falcon,
     block.h = size.h;
 
     SDL_RenderFillRect(sdl_renderer, &block);
+
+    // SDL_Rect dstrect = { pos.x, pos.y, size.w, size.h };
+    // SDL_RenderCopy(sdl_renderer, texture, NULL, &dstrect);
+    // SDL_RenderPresent(sdl_renderer);
   }
 
   auto bullets = falcon.GetBullets();
@@ -94,8 +100,8 @@ void Renderer::Render(MFalcon& falcon,
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0x00, 0xFF);
 
     // X and Y transpose    
-    auto pos = b.GetPosition();
-    auto size = b.GetSize();
+    auto pos = b->GetPosition();
+    auto size = b->GetSize();
 
     // Set pos and size
     block.x = pos.y;

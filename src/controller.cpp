@@ -30,9 +30,9 @@ void Controller::HandleInput(bool &running, MFalcon &falcon) const
         case SDLK_RIGHT:
           _mm->MoveRight(&pos, speed);
           break;
-        case SDLK_SPACE:    
-          falcon.Shoot();
-        break;
+        // case SDLK_SPACE:    
+        //   falcon.Shoot();
+        // break;
       }
 
       // Check if new position is OK
@@ -41,6 +41,13 @@ void Controller::HandleInput(bool &running, MFalcon &falcon) const
          // Update position
         falcon.SetPosition(pos);
       }
+
+      const Uint8 *state = SDL_GetKeyboardState(NULL);
+      while (state[SDL_SCANCODE_SPACE])
+      {
+        state = SDL_GetKeyboardState(NULL);
+        printf("Space Key Pressed.\n");
+      }      
     }
   }
 }

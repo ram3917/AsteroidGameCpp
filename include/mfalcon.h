@@ -24,7 +24,7 @@ public:
 
     void UpdateBullets(std::vector<std::shared_ptr<Asteroid>>& asteroids);    
 
-    std::vector<Bullet> GetBullets()
+    std::vector<std::shared_ptr<Bullet>> GetBullets()
     {
         return _bullets;
     }
@@ -32,7 +32,7 @@ public:
 private:
    
     // A list of all bullets
-    std::vector<Bullet> _bullets;
+    std::vector<std::shared_ptr<Bullet>> _bullets;
 };
 
 #endif

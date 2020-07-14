@@ -38,9 +38,9 @@ bool MotionModel::IsItemOnScreen(const Position& pos,
 bool MotionModel::CheckCollision(Position& l1, Size& s1,
                      Position& l2, Size& s2)
 {
-    if ( (std::abs(l1.x - l2.x) > std::max(s1.w, s2.w)) ||
-       (std::abs(l1.y - l2.y) > std::max(s1.h, s2.h)) )
+    if ( (l1.x > l2.x + s2.h) || (l1.x + s1.h < l2.x) ||
+       (l1.y > l2.y + s2.w) || (l1.y + s1.w < l2.y) )
     return false;    
   
-  return true;
+  return true;  
 }

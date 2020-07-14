@@ -25,8 +25,6 @@ class Renderer {
   SDL_Window *sdl_window;
   SDL_Renderer *sdl_renderer; 
 
-  SDL_Surface *image_asteroid;
-
   const std::size_t screen_width;
   const std::size_t screen_height;
 };

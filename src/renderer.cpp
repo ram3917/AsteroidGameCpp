@@ -34,9 +34,6 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
   }
-
-  image_asteroid = SDL_LoadBMP("meteors.bmp");
-
 }
 
 Renderer::~Renderer() {
@@ -87,10 +84,6 @@ void Renderer::Render(MFalcon& falcon,
     block.h = size.h;
 
     SDL_RenderFillRect(sdl_renderer, &block);
-
-    // SDL_Rect dstrect = { pos.x, pos.y, size.w, size.h };
-    // SDL_RenderCopy(sdl_renderer, texture, NULL, &dstrect);
-    // SDL_RenderPresent(sdl_renderer);
   }
 
   auto bullets = falcon.GetBullets();

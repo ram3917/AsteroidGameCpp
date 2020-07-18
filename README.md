@@ -1,4 +1,4 @@
-# CPPND: Capstone Snake Game Example
+# CPPND: Capstone Asteroid Shooter Game 
 
 This is created based on the starter repo for the Capstone project in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213). The code for this repo was inspired by [this](https://codereview.stackexchange.com/questions/212296/snake-game-in-c-with-sdl) excellent StackOverflow post and set of responses.
 
@@ -29,3 +29,17 @@ In this project, you can build your own C++ application or extend this Snake gam
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./AsteroidShooter`.
+
+### For Capstone Project Review
+# Loops, Functions, I/O
+* The files mfalcon.cpp, motion_model.cpp and game.cpp use various control Structures
+
+# Object Oriented Programming
+* The folder include/ defines the header files for the various classes defined in the project such as MFalcon, Asteroid, Bullet, MotionModel etc.
+* Class MFalcon and Object used both private and public methods (include/object.h, include/mfalcon.h)
+* Classes follow an appropriate inheritance hierarchy : Classes MFalcon, Asteroid, Bullet are inherited from Object class which defines the objects.
+
+# Memory Management
+* The project makes use of references in function declarations: include/MFalcon.h (line 25) takes the reference to vector
+* Rule of five: Classes Bullet, MFalcon (mFalcon.h) and Asteroid (asteroid.h) have default copy and move constructors defined.
+* The project uses smart pointers instead of raw pointers: Class MFalcon (mFalcon.h) has a vector of shared_ptr.

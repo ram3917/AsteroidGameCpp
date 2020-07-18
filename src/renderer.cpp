@@ -41,7 +41,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(MFalcon& falcon,
+void Renderer::Render(std::shared_ptr<MFalcon> falcon,
      std::vector<std::shared_ptr<Asteroid>>& asteroids)
 {
   SDL_Rect block;
@@ -54,8 +54,8 @@ void Renderer::Render(MFalcon& falcon,
   SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xFF, 0x00, 0xFF);
 
   // X and Y transpose
-  auto pos  = falcon.GetPosition();
-  auto size = falcon.GetSize();
+  auto pos  = falcon->GetPosition();
+  auto size = falcon->GetSize();
 
   // Set pos and size
   block.x = pos.y;
@@ -84,7 +84,7 @@ void Renderer::Render(MFalcon& falcon,
     SDL_RenderFillRect(sdl_renderer, &block);
   }
 
-  auto bullets = falcon.GetBullets();
+  auto bullets = falcon->GetBullets();
   for (auto b : bullets)
   {
       // Render falcon ship 

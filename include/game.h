@@ -24,9 +24,9 @@ class Game
  private:
 
   // Defines motion in space
-  MotionModel* _mm;
+  std::unique_ptr<MotionModel> _mm;
 
-  MFalcon* _falcon;
+  std::shared_ptr<MFalcon> _falcon;
   // laser shot position (s)
   // Asteroids
   std::vector<std::shared_ptr<Asteroid>> _asteroids;

@@ -10,11 +10,11 @@ Game::Game(std::size_t screen_width, std::size_t screen_height)
       random_y(0, static_cast<int>(screen_width/2)),
       random_asteriods(0, 3)
 { 
-  _mm = new MotionModel(screen_width, screen_height);
+  _mm = std::make_unique<MotionModel>(std::move(MotionModel(screen_width, screen_height)));
 
   // Instatiate Falcon
-  _falcon = new MFalcon(static_cast<int>(screen_width - (screen_width / 10)),
-            static_cast<int>(screen_height / 2));
+  _falcon = std::make_shared<MFalcon>(std::move(MFalcon(static_cast<int>(screen_width - (screen_width / 10)),
+            static_cast<int>(screen_height / 2))));
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -30,14 +30,14 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, *_falcon);
+    controller.HandleInput(running, _falcon);
 
     // Stop if quit in controller
     if (!running)
       break;
 
     running = Update();
-    renderer.Render(*_falcon, _asteroids);
+    renderer.Render(_falcon, _asteroids);
 
     frame_end = SDL_GetTicks();
 

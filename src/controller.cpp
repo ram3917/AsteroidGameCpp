@@ -7,16 +7,16 @@ Controller::Controller(int width, int height)
   _mm = new MotionModel(width, height);
 }
 
-void Controller::HandleInput(bool &running, MFalcon &falcon) const 
+void Controller::HandleInput(bool &running, std::shared_ptr<MFalcon> falcon) const 
 {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
       running = false;
     } else if (e.type == SDL_KEYDOWN) {
-      Position pos = falcon.GetPosition();
+      Position pos = falcon->GetPosition();
       // ship speed
-      int speed = falcon.GetSpeed();
+      int speed = falcon->GetSpeed();
       switch (e.key.keysym.sym) {
         case SDLK_UP:
           _mm->MoveUp(&pos, speed);
@@ -31,15 +31,15 @@ void Controller::HandleInput(bool &running, MFalcon &falcon) const
           _mm->MoveRight(&pos, speed);
           break;
         case SDLK_SPACE:    
-          falcon.Shoot();
+          falcon->Shoot();
         break;
       }
 
       // Check if new position is OK
-      if (_mm->IsItemOnScreen(pos, falcon.GetSize()))
+      if (_mm->IsItemOnScreen(pos, falcon->GetSize()))
       {
          // Update position
-        falcon.SetPosition(pos);
+        falcon->SetPosition(pos);
       }
     }
   }

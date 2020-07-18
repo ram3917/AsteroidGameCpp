@@ -10,7 +10,7 @@ public:
 
   Controller(int width, int height);
 
-  void HandleInput(bool &running, MFalcon &falcon) const;
+  void HandleInput(bool &running, std::shared_ptr<MFalcon> falcon) const;
 
 private:
 

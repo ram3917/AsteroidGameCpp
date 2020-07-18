@@ -18,6 +18,14 @@ public:
         SetSpeed(2);
     }
 
+    // Rule of five
+    ~Asteroid() = default;
+    Asteroid(const Asteroid& other) = default;    
+    Asteroid& operator=(const Asteroid& other) = default;
+
+    Asteroid(Asteroid&& other) = default;
+    Asteroid& operator=(Asteroid&& other) = default;
+
     void KillAsteroid() { _isAlive = false; }
     bool IsAlive() { return _isAlive; }
 

@@ -18,7 +18,7 @@ class Renderer {
   Renderer(const std::size_t screen_width, const std::size_t screen_height);
   ~Renderer();
 
-  void Render(MFalcon& falcon, std::vector<std::shared_ptr<Asteroid>>& asteroids);
+  void Render(std::shared_ptr<MFalcon> falcon, std::vector<std::shared_ptr<Asteroid>>& asteroids);
   void UpdateWindowTitle(int score, int fps);
 
  private:

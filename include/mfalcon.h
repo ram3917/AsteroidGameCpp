@@ -12,6 +12,14 @@ class Bullet : public Object
 {
 public:
     Bullet(Position pos);
+
+    // Rule of five
+    ~Bullet() = default;
+    Bullet(const Bullet& other) = default;    
+    Bullet& operator=(const Bullet& other) = default;
+
+    Bullet(Bullet&& other) = default;
+    Bullet& operator=(Bullet&& other) = default;
 };
 
 class MFalcon : public Object
@@ -19,6 +27,14 @@ class MFalcon : public Object
 public:
     
     MFalcon(int x, int y);
+
+    // Rule of five
+    ~MFalcon() = default;
+    MFalcon(const MFalcon& other) = default;   
+    MFalcon& operator=(const MFalcon& other) = default;
+
+    MFalcon(MFalcon&& other) = default;
+    MFalcon& operator=(MFalcon&& other) = default;
 
     void Shoot();
 

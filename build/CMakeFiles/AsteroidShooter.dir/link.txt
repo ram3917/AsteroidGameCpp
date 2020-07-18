@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/AsteroidShooter.dir/src/controller.cpp.o CMakeFiles/AsteroidShooter.dir/src/game.cpp.o CMakeFiles/AsteroidShooter.dir/src/main.cpp.o CMakeFiles/AsteroidShooter.dir/src/mfalcon.cpp.o CMakeFiles/AsteroidShooter.dir/src/motion_model.cpp.o CMakeFiles/AsteroidShooter.dir/src/renderer.cpp.o  -o AsteroidShooter  -lSDL2 

@@ -1,3 +1,0 @@
-/home/rama/Documents/AsteroidGameCpp/build/CMakeFiles/rebuild_cache.dir
-/home/rama/Documents/AsteroidGameCpp/build/CMakeFiles/AsteroidShooter.dir
-/home/rama/Documents/AsteroidGameCpp/build/CMakeFiles/edit_cache.dir
